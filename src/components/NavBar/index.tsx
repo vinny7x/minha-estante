@@ -1,20 +1,21 @@
 import clsx from "clsx";
+import Link from "next/link";
 
 export function NavBar() {
   return (
     <nav
       className={clsx(
-        "fixed left-1/2 -translate-x-1/2",
+        "fixed left-1/2 -translate-x-1/2 z-10",
         "flex gap-6",
-        "px-6 py-3 mt-4",
-        "rounded-full",
-        "bg-black/30 backdrop-blur-md",
+        "px-4 py-2 mt-4",
+        'rounded-md',
+        "bg-black/30",
         "border border-white/10",
-        "shadow-xl"
       )}
     >
-      <NavItem href="#">Início</NavItem>
-      <NavItem href="#">Funcionalidades</NavItem>
+      <NavItem href="#home">Início</NavItem>
+      <NavItem href="#features">Funcionalidades</NavItem>
+      <NavItem href="/login">Login</NavItem>
     </nav>
   );
 }
@@ -26,15 +27,19 @@ function NavItem({
   href: string;
   children: React.ReactNode;
 }) {
+  const isInternal = href.startsWith('/');
+  const classes = clsx(
+    "text-sm text-white/70",
+    "hover:text-white",
+    "transition-all duration-200",
+    "hover:scale-105"
+  );
+  if (isInternal) return <Link className={classes} href={href}>{children}</Link>;
+
   return (
     <a
       href={href}
-      className={clsx(
-        "text-sm text-white/70",
-        "hover:text-white",
-        "transition-all duration-200",
-        "hover:scale-105"
-      )}
+      className={classes}
     >
       {children}
     </a>
