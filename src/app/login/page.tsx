@@ -1,10 +1,19 @@
 'use client'
 
 import clsx from "clsx";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FaDiscord } from "react-icons/fa6";
 
 export default function LoginPage() {
+   const { data: session } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/library");
+    }
+  }, [session, router]);
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <h1 className="text-5xl font-bold">Faça Login</h1>
