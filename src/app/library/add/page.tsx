@@ -16,6 +16,10 @@ import { truncateText } from "@/utils/truncateText";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { saveUserBook } from "@/actions/user/saveUserBook";
+import { toast } from "react-toastify";
+import { Badge } from "@/components/ui/badge";
+import { BookIcon } from "lucide-react";
+
 
 type Book = {
   id: string;
@@ -23,6 +27,7 @@ type Book = {
   authors: string;
   thumbnail?: string;
   description?: string;
+  pages: number
 };
 
 export default function AddPage() {
@@ -67,6 +72,13 @@ export default function AddPage() {
     setRating(0);
     setReview("");
   }
+   function handleCloseDetailsModal() {
+    setIsDetailsOpen(false);
+    setSelectedBook(null);
+    setStatus("reading");
+    setRating(0);
+    setReview("");
+  }
 
   async function handleSubmit() {
     if (!selectedBook) return;
@@ -81,10 +93,11 @@ export default function AddPage() {
         rating,
         review,
       });
-
+      toast.success('Livro adicionado à sua biblioteca')
       handleCloseAddModal();
-    } catch (error) {
-      console.error("Erro ao salvar livro:", error);
+    } catch {
+      toast.error('Esse livro já está em sua biblioteca')
+      handleCloseAddModal()
     }
   }
 
@@ -145,7 +158,7 @@ export default function AddPage() {
         <AlertDialogContent>
           {selectedBook && (
             <>
-              <AlertDialogHeader>
+              <AlertDialogHeader className="text-center justify-center">
                 <AlertDialogTitle>{selectedBook.title}</AlertDialogTitle>
                 <AlertDialogDescription>
                   {selectedBook.authors}
@@ -160,12 +173,24 @@ export default function AddPage() {
                   className="w-32 mx-auto rounded"
                 />
               )}
+<Badge>
+  <BookIcon/>
+  {selectedBook.pages} Páginas
+</Badge>
+              <p></p>
+              <ScrollArea className="h-72 p-2 bg-muted rounded-sm">
+                <p className="text-balance leading-relaxed">
 
-              <ScrollArea className="h-72 p-2">
                 {selectedBook.description || "Sem descrição disponível."}
+                </p>
               </ScrollArea>
-
-              <div className="flex justify-end mt-6">
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                    variant="outline"
+                    onClick={handleCloseDetailsModal}
+                  >
+                    Fechar
+                  </Button>
                 <Button onClick={openAddModal}>
                   Adicionar à biblioteca
                 </Button>
@@ -191,6 +216,7 @@ export default function AddPage() {
 
               <div className="space-y-4 mt-4">
                 <Select
+
                   value={status}
                   onValueChange={(value) => setStatus(value)}
                 >
@@ -200,7 +226,7 @@ export default function AddPage() {
                   <SelectContent>
                     <SelectItem value="reading">Lendo</SelectItem>
                     <SelectItem value="read">Lido</SelectItem>
-                    <SelectItem value="paused">Pausado</SelectItem>
+                    <SelectItem value="wantToRead">Quero ler</SelectItem>
                   </SelectContent>
                 </Select>
                 {status === 'read' && (

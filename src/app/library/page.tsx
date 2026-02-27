@@ -20,8 +20,14 @@ export default async function LibraryPage() {
     redirect("/login");
 
   };
+  type BookStatus = "reading" | "read" | "wantToRead";
 
-  console.log(user);
+const bookStatusMap: Record<BookStatus, string> = {
+  reading: "Lendo",
+  read: "Lido",
+  wantToRead: "Quero ler",
+};
+
   return (
     <Container>
 
@@ -67,8 +73,7 @@ export default async function LibraryPage() {
               )}
 
               <p className="text-xs mt-1">
-                {book.status}
-              </p>
+{book.status ? bookStatusMap[book.status as BookStatus] : "Desconhecido"}              </p>
             </div>
           </Card>
         ))}

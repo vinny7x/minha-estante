@@ -9,6 +9,5 @@ export async function createNewBook(data: NewBook) {
     .insert(books)
     .values(data)
     .returning();
-
   return book;
 }

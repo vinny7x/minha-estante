@@ -32,7 +32,8 @@ export async function GET(req: Request) {
             title: item.volumeInfo.title,
             description: item.volumeInfo.description,
             authors: item.volumeInfo.authors?.join(", ") ?? "Desconhecido",
-            thumbnail: item.volumeInfo.imageLinks?.thumbnail
+            thumbnail: item.volumeInfo.imageLinks?.thumbnail.replace('&edge=curl', ''),
+            pages: item.volumeInfo.pageCount
         })) ?? [];
 
     return Response.json(mapped);

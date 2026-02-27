@@ -17,6 +17,7 @@ export const books = pgTable('books', {
     authors: text('author').notNull(),
     description: text('description'),
     coverUrl: text('cover_url'),
+    pages: numeric('pages'),
     createdAt: timestamp("created_at").defaultNow(),
     publishedDate: timestamp('pub_date')
 });
