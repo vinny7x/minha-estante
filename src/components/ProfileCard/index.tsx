@@ -1,13 +1,18 @@
 'use client';
 
-import clsx from "clsx";
 import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 type ProfileCardProps = {
-  image: string;
+  image?: string;
   username: string;
   realname: string;
-  bookCounter: number;
   bio: string;
 };
 
@@ -15,47 +20,37 @@ export function ProfileCard({
   image,
   username,
   realname,
-  bookCounter,
-  bio
+  bio,
 }: ProfileCardProps) {
   return (
-    <div
-      className={clsx(
-        "max-w-sm p-6 rounded-2xl flex items-center gap-4 flex-col",
-        "bg-white shadow-md shadow-black/5",
-        "transition-all duration-200",
-        
-      )}
-    >
-      {image && (
-        <div className="w-20 h-20 rounded-lg border-2 border-blue-500 overflow-hidden shrink-0">
-          <Image
-            src={image}
-            alt="Profile image"
-            width={100}
-            height={100}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-
-      <div
-        className={clsx(
-          "flex flex-col",
-          !image && "pl-1"
+    <Card className="max-w-sm rounded-2xl shadow-md">
+      <CardHeader className="flex flex-col items-center text-center gap-3">
+        {image && (
+          <div className="w-20 h-20 rounded-md overflow-hidden border-2 border-blue-500 ">
+            <Image
+              src={image}
+              alt={`Foto de ${username}`}
+              width={80}
+              height={80}
+              className="object-cover w-full h-full"
+            />
+          </div>
         )}
-      >
-        <span className="text-base font-medium text-blue-500">
-          {username}
-        </span>
 
-        <span className="text-sm text-gray-500">
-          {realname}
-        </span>
-             
+        <div>
+          <CardTitle className="text-lg">
+            {username}
+          </CardTitle>
 
+          <CardDescription>
+            {realname}
+          </CardDescription>
+        </div>
+      </CardHeader>
 
-      </div> <p className="">{bio}</p>
-    </div>
+      <CardContent className="text-center text-sm text-muted-foreground">
+        {bio}
+      </CardContent>
+    </Card>
   );
 }

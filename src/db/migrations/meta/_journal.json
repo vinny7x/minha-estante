@@ -15,6 +15,13 @@
       "when": 1771969772954,
       "tag": "0001_yellow_supernaut",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1772157960079,
+      "tag": "0002_nifty_rocket_raccoon",
+      "breakpoints": true
     }
   ]
 }

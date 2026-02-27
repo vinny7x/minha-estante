@@ -1,8 +1,23 @@
 import { db } from "@/db/db";
-import { userBooks } from "@/db/schema";
+import { userBooks, books } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getUserBooks(userId: string) {
-    const books = await db.select().from(userBooks).where(eq(userBooks.userId, userId));
-    return books;
+  const result = await db
+    .select({
+      id: userBooks.bookId,
+      status: userBooks.status,
+      rating: userBooks.rating,
+      review: userBooks.review,
+      bookId: books.id,
+      title: books.title,
+      authors: books.authors,
+      coverUrl: books.coverUrl,
+      description: books.description,
+    })
+    .from(userBooks)
+    .innerJoin(books, eq(userBooks.bookId, books.id))
+    .where(eq(userBooks.userId, userId));
+
+  return result;
 }

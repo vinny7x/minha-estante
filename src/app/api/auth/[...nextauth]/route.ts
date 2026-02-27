@@ -33,7 +33,6 @@ export const authOptions: AuthOptions = {
 
         token.userId = dbUser.id;
       }
-      console.log(token);
       return token;
     },
     async session({ session, token }) {

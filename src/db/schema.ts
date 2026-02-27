@@ -14,10 +14,11 @@ export const users = pgTable("users", {
 export const books = pgTable('books', {
     id: text('id').primaryKey(),
     title: text('title').notNull(),
-    author: text('author').notNull(),
+    authors: text('author').notNull(),
     description: text('description'),
     coverUrl: text('cover_url'),
     createdAt: timestamp("created_at").defaultNow(),
+    publishedDate: timestamp('pub_date')
 });
 
 export const userBooks = pgTable("user_books", {
