@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import clsx from "clsx";
 import {
   Card,
   CardContent,
@@ -8,12 +9,16 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { Separator } from "../ui/separator";
+import { ScrollArea } from "../ui/scroll-area";
 
 type ProfileCardProps = {
   image?: string;
   username: string;
   realname: string;
   bio: string;
+  pagesRead?: number;
+  booksRead?: number;
 };
 
 export function ProfileCard({
@@ -21,35 +26,85 @@ export function ProfileCard({
   username,
   realname,
   bio,
+  pagesRead = 0,
+  booksRead = 0,
 }: ProfileCardProps) {
   return (
-    <Card className="max-w-sm rounded-2xl shadow-md">
-      <CardHeader className="flex flex-col items-center text-center gap-3">
+    <Card
+      className={clsx(
+        "mt-4",
+        "mx-auto",
+        "max-w-2xl",
+        "overflow-hidden",
+        "rounded-2xl",
+        "shadow-md",
+        "p-0"
+      )}
+    >
+      <CardHeader
+        className={clsx(
+          "flex items-center gap-6 p-6",
+          "bg-gray-500 text-white"
+        )}
+      >
         {image && (
-          <div className="w-20 h-20 rounded-md overflow-hidden border-2 border-blue-500 ">
+          <div
+            className={clsx(
+              "w-24 h-24 shrink-0 overflow-hidden rounded-md",
+              "border-4 border-blue-500 shadow-lg"
+            )}
+          >
             <Image
               src={image}
               alt={`Foto de ${username}`}
-              width={80}
-              height={80}
-              className="object-cover w-full h-full"
+              width={96}
+              height={96}
+              className="h-full w-full object-cover"
             />
           </div>
         )}
 
-        <div>
-          <CardTitle className="text-lg">
+        <div className="flex flex-col justify-center">
+          <CardTitle className="text-xl font-bold">
             {username}
           </CardTitle>
-
-          <CardDescription>
+          <CardDescription className="text-sm text-white/80">
             {realname}
           </CardDescription>
         </div>
       </CardHeader>
 
-      <CardContent className="text-center text-sm text-muted-foreground">
-        {bio}
+      <CardContent
+        className={clsx(
+          "flex items-center justify-around gap-6",
+          "px-6 py-4 text-center",
+          "flex-col sm:flex-row"
+        )}
+      >
+        <div className="flex flex-col items-center bg-muted p-2 rounded-sm text-balance">
+          <ScrollArea className=" text-wrap">
+
+            {bio}
+          </ScrollArea>
+        </div>
+
+        <Separator className="sm:hidden" />
+
+        <div className="flex gap-6">
+          <div className="flex flex-col items-center">
+            <span className="text-lg font-bold">{pagesRead}</span>
+            <span className="text-xs text-muted-foreground">
+              Páginas lidas
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <span className="text-lg font-bold">{booksRead}</span>
+            <span className="text-xs text-muted-foreground">
+              Livros lidos
+            </span>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

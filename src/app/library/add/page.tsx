@@ -27,7 +27,7 @@ type Book = {
   authors: string;
   thumbnail?: string;
   description?: string;
-  pages: number
+  pages: number;
 };
 
 export default function AddPage() {
@@ -72,7 +72,7 @@ export default function AddPage() {
     setRating(0);
     setReview("");
   }
-   function handleCloseDetailsModal() {
+  function handleCloseDetailsModal() {
     setIsDetailsOpen(false);
     setSelectedBook(null);
     setStatus("reading");
@@ -93,11 +93,11 @@ export default function AddPage() {
         rating,
         review,
       });
-      toast.success('Livro adicionado à sua biblioteca')
+      toast.success('Livro adicionado à sua estante');
       handleCloseAddModal();
     } catch {
-      toast.error('Esse livro já está em sua biblioteca')
-      handleCloseAddModal()
+      toast.warning('Esse livro já está em sua estante');
+      handleCloseAddModal();
     }
   }
 
@@ -173,24 +173,24 @@ export default function AddPage() {
                   className="w-32 mx-auto rounded"
                 />
               )}
-<Badge>
-  <BookIcon/>
-  {selectedBook.pages} Páginas
-</Badge>
+              <Badge>
+                <BookIcon />
+                {selectedBook.pages} Páginas
+              </Badge>
               <p></p>
               <ScrollArea className="h-72 p-2 bg-muted rounded-sm">
                 <p className="text-balance leading-relaxed">
 
-                {selectedBook.description || "Sem descrição disponível."}
+                  {selectedBook.description || "Sem descrição disponível."}
                 </p>
               </ScrollArea>
               <div className="flex justify-end gap-2 pt-2">
                 <Button
-                    variant="outline"
-                    onClick={handleCloseDetailsModal}
-                  >
-                    Fechar
-                  </Button>
+                  variant="outline"
+                  onClick={handleCloseDetailsModal}
+                >
+                  Fechar
+                </Button>
                 <Button onClick={openAddModal}>
                   Adicionar à biblioteca
                 </Button>
