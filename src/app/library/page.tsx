@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ProfileCard } from "@/components/ProfileCard";
-
 import { redirect } from "next/navigation";
 import { Container } from "@/components/Container";
 import { getUserById } from "@/lib/db/queries/user/getUserById";
@@ -99,7 +98,7 @@ export default async function LibraryPage() {
               )}
             </div>
 
-            <div className="p-3 space-y-1">
+            <div className="p-2 space-y-1">
               <h2 className="text-sm font-semibold line-clamp-2">
                 {book.title}
               </h2>

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
+import { AtSignIcon } from "lucide-react";
 
 type ProfileCardProps = {
   image?: string;
@@ -65,8 +66,8 @@ export function ProfileCard({
         )}
 
         <div className="flex flex-col justify-center">
-          <CardTitle className="text-xl font-bold">
-            {username}
+          <CardTitle className="text-xl font-bold flex items-center gap-1">
+            <AtSignIcon size={16} /> {username}
           </CardTitle>
           <CardDescription className="text-sm text-white/80">
             {realname}

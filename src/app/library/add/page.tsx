@@ -18,7 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { saveUserBook } from "@/actions/user/saveUserBook";
 import { toast } from "react-toastify";
 import { Badge } from "@/components/ui/badge";
-import { BookIcon } from "lucide-react";
+import { BookIcon, PlusCircleIcon, SaveIcon, SearchIcon, XCircleIcon } from "lucide-react";
 
 
 type Book = {
@@ -112,7 +112,7 @@ export default function AddPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button onClick={handleSearch}>Buscar</Button>
+        <Button className="flex items-center gap-2" onClick={handleSearch}><SearchIcon /> Buscar</Button>
       </div>
 
       {/* Resultados */}
@@ -186,13 +186,14 @@ export default function AddPage() {
               </ScrollArea>
               <div className="flex justify-end gap-2 pt-2">
                 <Button
+                  className="flex items-center gap-2"
                   variant="outline"
                   onClick={handleCloseDetailsModal}
                 >
-                  Fechar
+                  <XCircleIcon /> Fechar
                 </Button>
-                <Button onClick={openAddModal}>
-                  Adicionar à biblioteca
+                <Button className="flex items-center gap-2" onClick={openAddModal}>
+                  <PlusCircleIcon /> Adicionar à biblioteca
                 </Button>
               </div>
             </>
@@ -251,13 +252,15 @@ export default function AddPage() {
 
                 <div className="flex justify-end gap-2 pt-2">
                   <Button
+                    className="flex items-center gap-2"
                     variant="outline"
                     onClick={handleCloseAddModal}
                   >
-                    Cancelar
+                    <XCircleIcon /> Cancelar
                   </Button>
 
-                  <Button onClick={handleSubmit}>
+                  <Button className="flex items-center gap-2" onClick={handleSubmit}>
+                    <SaveIcon />
                     Salvar
                   </Button>
                 </div>
