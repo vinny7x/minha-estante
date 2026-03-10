@@ -214,10 +214,8 @@ export default function AddPage() {
                   Configure como o livro ficará na sua biblioteca.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-
               <div className="space-y-4 mt-4">
                 <Select
-
                   value={status}
                   onValueChange={(value) => setStatus(value)}
                 >
@@ -240,12 +238,15 @@ export default function AddPage() {
                     onChange={(e) => setRating(Number(e.target.value))}
                     placeholder="Nota"
                   />
-
-                    <Textarea
-                      value={review}
-                      onChange={(e) => setReview(e.target.value)}
-                      placeholder="Review"
-                    />
+                    <ScrollArea className="h-48">
+                      <Textarea
+                      maxLength={2000}
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
+                        className="break-all"
+                        placeholder="Review"
+                        />
+                    </ScrollArea>
                   </>
                 )}
 
