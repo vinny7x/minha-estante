@@ -64,7 +64,10 @@ export default async function LibraryPage() {
           username={user.username ?? ''}
           bio={user.bio ?? ''}
           realname={user.realname ?? ''}
-        />
+          booksRead={userBooks.filter((book) => book.status === 'read').length}
+          pagesRead={userBooks
+            .filter(b => b.pages !== null)
+            .reduce((t, b) => Number(t + b.pages!), 0)} />
       </div>
       <span className="flex items-center justify-center m-6 gap-2 flex-col md:flex-row">
         <h1 className="text-2xl font-bold text-center">Sua estante</h1>

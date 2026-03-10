@@ -93,14 +93,14 @@ export function ProfileCard({
 
         <div className="flex gap-6">
           <div className="flex flex-col items-center">
-            <span className="text-lg font-bold">{pagesRead}</span>
+            <span className="text-lg font-bold">{pagesRead.toLocaleString()}</span>
             <span className="text-xs text-muted-foreground">
               Páginas lidas
             </span>
           </div>
 
           <div className="flex flex-col items-center">
-            <span className="text-lg font-bold">{booksRead}</span>
+            <span className="text-lg font-bold">{booksRead.toLocaleString()}</span>
             <span className="text-xs text-muted-foreground">
               Livros lidos
             </span>

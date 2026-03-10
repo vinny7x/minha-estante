@@ -27,7 +27,7 @@ type Book = {
   authors: string;
   thumbnail?: string;
   description?: string;
-  pages: number;
+  pages: string;
 };
 
 export default function AddPage() {
@@ -89,6 +89,7 @@ export default function AddPage() {
         authors: selectedBook.authors,
         thumbnail: selectedBook.thumbnail,
         description: selectedBook.description,
+        pages: selectedBook.pages,
         status,
         rating,
         review,

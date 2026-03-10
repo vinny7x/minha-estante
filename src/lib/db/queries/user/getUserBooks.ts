@@ -14,6 +14,7 @@ export async function getUserBooks(userId: string) {
       authors: books.authors,
       coverUrl: books.coverUrl,
       description: books.description,
+      pages: books.pages
     })
     .from(userBooks)
     .innerJoin(books, eq(userBooks.bookId, books.id))

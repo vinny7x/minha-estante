@@ -13,6 +13,7 @@ type SaveUserBookInput = {
   title: string;
   authors: string;
   thumbnail?: string;
+  pages: string;
   description?: string;
   status: string;
   rating: number;
@@ -20,8 +21,8 @@ type SaveUserBookInput = {
 };
 
 export async function saveUserBook(data: SaveUserBookInput) {
-    const session = await getServerSession(authOptions);
-    if(!session) throw new Error('usuário nao autenticado')
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error('usuário nao autenticado');
 
   const existingBook = await getBookById(data.googleId);
 
@@ -32,6 +33,7 @@ export async function saveUserBook(data: SaveUserBookInput) {
       id: data.googleId,
       title: data.title,
       authors: data.authors,
+      pages: data.pages,
       description: data.description,
       coverUrl: data.thumbnail,
     });
