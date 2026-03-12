@@ -1,4 +1,5 @@
 ## 0.7.0
+Adiciona a exibição das informações na estante com um modal
 Separação do componente BookCard
 
 ## 0.6.1

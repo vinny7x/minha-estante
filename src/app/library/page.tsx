@@ -58,10 +58,11 @@ export default async function LibraryPage() {
           <BookCard
           key={book.bookId}
           authors={book.authors}
-          bookId={book.bookId} 
-          coverUrl={book.coverUrl ?? ''}
+          coverUrl={book.coverUrl}
           title={book.title}
-          status={book.status ?? ''}          
+          status={book.status} 
+          rating={book.rating}    
+          review={book.review}     
           />
         ))}
       </div>
