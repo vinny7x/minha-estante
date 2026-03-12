@@ -179,9 +179,8 @@ export default function AddPage() {
                 {selectedBook.pages} Páginas
               </Badge>
               <p></p>
-              <ScrollArea className="h-72 p-2 bg-muted rounded-sm">
-                <p className="text-balance leading-relaxed">
-
+              <ScrollArea className="max-h-72 p-2 bg-muted rounded-sm">
+                <p className="leading-relaxed whitespace-pre-wrap warp-break-words">
                   {selectedBook.description || "Sem descrição disponível."}
                 </p>
               </ScrollArea>

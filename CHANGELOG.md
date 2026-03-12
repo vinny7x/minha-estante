@@ -1,3 +1,6 @@
+## 0.7.1
+Ajusta responsividade de textos em modais
+
 ## 0.7.0
 Adiciona a exibição das informações na estante com um modal
 Separação do componente BookCard
