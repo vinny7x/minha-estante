@@ -5,12 +5,10 @@ import { redirect } from "next/navigation";
 import { Container } from "@/components/Container";
 import { getUserById } from "@/lib/db/queries/user/getUserById";
 import { getUserBooks } from "@/lib/db/queries/user/getUserBooks";
-import { Card } from "@/components/ui/card";
-import { Check, BookOpen, Bookmark, PlusCircleIcon, LogOutIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import clsx from "clsx";
+import { PlusCircleIcon, LogOutIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BookCard } from "@/components/BookCard";
 
 export default async function LibraryPage() {
   const session = await getServerSession(authOptions);
@@ -22,32 +20,8 @@ export default async function LibraryPage() {
     redirect("/login");
 
   };
-  type BookStatus = "reading" | "read" | "wantToRead";
 
-  const statusConfig: Record<
-    BookStatus,
-    {
-      label: string;
-      icon: React.ElementType;
-      className: string;
-    }
-  > = {
-    read: {
-      label: "Lido",
-      icon: Check,
-      className: "bg-green-500 hover:bg-green-500/90 text-white",
-    },
-    reading: {
-      label: "Lendo",
-      icon: BookOpen,
-      className: "bg-yellow-500 hover:bg-yellow-500/90 text-white",
-    },
-    wantToRead: {
-      label: "Quero ler",
-      icon: Bookmark,
-      className: "bg-blue-500 hover:bg-blue-500/90 text-white",
-    },
-  };
+  
   return (
     <Container>
       <div className="flex justify-end">
@@ -81,60 +55,14 @@ export default async function LibraryPage() {
       <div className="flex flex-wrap justify-center gap-6">
 
         {userBooks.map((book) => (
-          <Card
-            key={book.bookId}
-            className="group cursor-pointer overflow-hidden transition hover:shadow-lg pt-0 bg-muted basis-40 sm:basis-48 md:basis-56"
-          >
-            <div className="aspect-2/3 w-full overflow-hidden bg-muted">
-              {book.coverUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={book.coverUrl}
-                  alt={`Capa do livro ${book.title}`}
-                  className="h-full w-full object-cover transition group-hover:scale-105"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-                  Sem capa
-                </div>
-              )}
-            </div>
-
-            <div className="p-2 space-y-1">
-              <h2 className="text-sm font-semibold line-clamp-2">
-                {book.title}
-              </h2>
-
-              {book.authors && (
-                <p className="text-xs text-muted-foreground line-clamp-1">
-                  {book.authors}
-                </p>
-              )}
-
-              {book.status && statusConfig[book.status as BookStatus] ? (
-                (() => {
-                  const { label, icon: Icon, className } =
-                    statusConfig[book.status as BookStatus];
-
-                  return (
-                    <Badge
-                      className={clsx(
-                        "flex items-center gap-1 text-xs font-medium",
-                        className
-                      )}
-                    >
-                      <Icon size={14} />
-                      {label}
-                    </Badge>
-                  );
-                })()
-              ) : (
-                <Badge variant="secondary" className="text-xs">
-                  Desconhecido
-                </Badge>
-              )}
-            </div>
-          </Card>
+          <BookCard
+          key={book.bookId}
+          authors={book.authors}
+          bookId={book.bookId} 
+          coverUrl={book.coverUrl ?? ''}
+          title={book.title}
+          status={book.status ?? ''}          
+          />
         ))}
       </div>
 

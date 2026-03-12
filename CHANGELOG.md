@@ -1,3 +1,6 @@
+## 0.7.0
+Separação do componente BookCard
+
 ## 0.6.1
 Correção de um erro na contagem de páginas lidas.
 
