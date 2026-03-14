@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { saveUserBook } from "@/actions/user/saveUserBook";
 import { toast } from "react-toastify";
 import { Badge } from "@/components/ui/badge";
-import { BookIcon, PlusCircleIcon, SaveIcon, SearchIcon, XCircleIcon } from "lucide-react";
+import { BookIcon, LoaderIcon, PlusCircleIcon, SaveIcon, SearchIcon, XCircleIcon } from "lucide-react";
 
 
 type Book = {
@@ -42,17 +42,23 @@ export default function AddPage() {
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState("");
 
+  const [isSaving, startSaveTransition] = useTransition();
+  const [isSearching, startSearchTransition] = useTransition();
+
+
   async function handleSearch() {
     if (!query.trim()) return;
+    startSearchTransition(async () => {
+      const res = await fetch(
+        `/api/books/search?q=${encodeURIComponent(query)}`
+      );
 
-    const res = await fetch(
-      `/api/books/search?q=${encodeURIComponent(query)}`
-    );
+      if (!res.ok) return;
 
-    if (!res.ok) return;
+      const data: Book[] = await res.json();
+      setResults(data);
 
-    const data: Book[] = await res.json();
-    setResults(data);
+    });
   }
 
   function openDetails(book: Book) {
@@ -82,24 +88,27 @@ export default function AddPage() {
 
   async function handleSubmit() {
     if (!selectedBook) return;
-    try {
-      await saveUserBook({
-        googleId: selectedBook.id,
-        title: selectedBook.title,
-        authors: selectedBook.authors,
-        thumbnail: selectedBook.thumbnail,
-        description: selectedBook.description,
-        pages: selectedBook.pages,
-        status,
-        rating,
-        review,
-      });
-      toast.success('Livro adicionado à sua estante');
-      handleCloseAddModal();
-    } catch {
-      toast.warning('Esse livro já está em sua estante');
-      handleCloseAddModal();
-    }
+    startSaveTransition(async () => {
+      try {
+        await saveUserBook({
+          googleId: selectedBook.id,
+          title: selectedBook.title,
+          authors: selectedBook.authors,
+          thumbnail: selectedBook.thumbnail,
+          description: selectedBook.description,
+          pages: selectedBook.pages,
+          status,
+          rating,
+          review,
+        });
+        toast.success('Livro adicionado à sua estante');
+        handleCloseAddModal();
+      } catch {
+        toast.warning('Esse livro já está em sua estante');
+        handleCloseAddModal();
+      }
+    });
+
   }
 
   return (
@@ -113,7 +122,18 @@ export default function AddPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button className="flex items-center gap-2" onClick={handleSearch}><SearchIcon /> Buscar</Button>
+        <Button disabled={isSearching} className="flex items-center gap-2" onClick={handleSearch}>
+
+          {isSearching ? (
+            <>
+              <LoaderIcon className="animate-spin" />
+              Buscando...
+            </>
+          ) : (
+            <>
+              <SearchIcon /> Buscar
+            </>
+          )}</Button>
       </div>
 
       {/* Resultados */}
@@ -200,7 +220,6 @@ export default function AddPage() {
           )}
         </AlertDialogContent>
       </AlertDialog>
-
       {/* Modal 2 - Configurar livro */}
       <AlertDialog open={isAddModalOpen} onOpenChange={handleCloseAddModal}>
         <AlertDialogContent>
@@ -240,12 +259,12 @@ export default function AddPage() {
                   />
                     <ScrollArea className="h-48">
                       <Textarea
-                      maxLength={2000}
+                        maxLength={2000}
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         className="break-all"
                         placeholder="Review"
-                        />
+                      />
                     </ScrollArea>
                   </>
                 )}
@@ -260,9 +279,20 @@ export default function AddPage() {
                     <XCircleIcon /> Cancelar
                   </Button>
 
-                  <Button className="flex items-center gap-2" onClick={handleSubmit}>
-                    <SaveIcon />
-                    Salvar
+                  <Button disabled={isSaving} className="flex items-center gap-2" onClick={handleSubmit}>
+                    {isSaving ? (
+                      <>
+                        <LoaderIcon className="animate-spin" />
+                        Salvando...
+                      </>
+                    ) : (
+                      <>
+                        <SaveIcon />
+                        Salvar
+                      </>
+                    )}
+
+
                   </Button>
                 </div>
               </div>
