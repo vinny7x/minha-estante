@@ -257,12 +257,12 @@ export default function AddPage() {
                     onChange={(e) => setRating(Number(e.target.value))}
                     placeholder="Nota"
                   />
-                    <ScrollArea className="h-48">
+                    <ScrollArea className="max-h-72">
                       <Textarea
                         maxLength={2000}
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
-                        className="break-all"
+                        className="leading-relaxed whitespace-pre-wrap warp-break-words max-h-72 w-72"
                         placeholder="Review"
                       />
                     </ScrollArea>

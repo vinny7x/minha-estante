@@ -33,15 +33,19 @@ export function ModalBookInfo({
                     <DialogTitle>{title}</DialogTitle>
                     <StatusBadge status={status} />
                 </DialogHeader>
+                {status === 'read' && (
+                    <>
+                        <p className="text-sm text-muted-foreground">
+                            Avaliação: {rating || "Sem avaliação"}
+                        </p>
+                        <ScrollArea className="bg-muted max-h-72 rounded-md p-2">
+                            <p className="leading-relaxed whitespace-pre-wrap warp-break-words">
+                                {review || "Sem resenha"}
+                            </p>
+                        </ScrollArea>
+                    </>
+                )}
 
-                <p className="text-sm text-muted-foreground">
-                    Avaliação: {rating || "Sem avaliação"}
-                </p>
-                <ScrollArea className="bg-muted max-h-72 rounded-md p-2">
-                    <p className="leading-relaxed whitespace-pre-wrap warp-break-words">
-                        {review || "Sem resenha"}
-                    </p>
-                </ScrollArea>
             </DialogContent>
         </Dialog>
     );
