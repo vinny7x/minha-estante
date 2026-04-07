@@ -21,7 +21,7 @@ export default async function LibraryPage() {
 
   };
 
-  
+
   return (
     <Container>
       <div className="flex justify-end">
@@ -40,7 +40,9 @@ export default async function LibraryPage() {
           realname={user.realname ?? ''}
           booksRead={userBooks.filter((book) => book.status === 'read').length}
           pagesRead={userBooks
-            .reduce((t, b) => Number(t) + Number(b.pages), 0)} />
+            .reduce((t, b) => Number(t) + Number(b.pages), 0)}
+          isOwner
+        />
       </div>
       <span className="flex items-center justify-center m-6 gap-2 flex-col md:flex-row">
         <h1 className="text-2xl font-bold text-center">Sua estante</h1>
@@ -56,13 +58,13 @@ export default async function LibraryPage() {
 
         {userBooks.map((book) => (
           <BookCard
-          key={book.bookId}
-          authors={book.authors}
-          coverUrl={book.coverUrl}
-          title={book.title}
-          status={book.status} 
-          rating={book.rating}    
-          review={book.review}     
+            key={book.bookId}
+            authors={book.authors}
+            coverUrl={book.coverUrl}
+            title={book.title}
+            status={book.status}
+            rating={book.rating}
+            review={book.review}
           />
         ))}
       </div>

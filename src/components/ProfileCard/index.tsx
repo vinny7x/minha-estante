@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
-import { AtSignIcon } from "lucide-react";
+import { AtSignIcon, PencilIcon } from "lucide-react";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import { ProfileEditModal } from "../ProfileEditModal";
 
 type ProfileCardProps = {
   image?: string;
@@ -20,8 +23,8 @@ type ProfileCardProps = {
   bio: string;
   pagesRead?: number;
   booksRead?: number;
+  isOwner?: boolean;
 };
-
 export function ProfileCard({
   image,
   username,
@@ -29,7 +32,11 @@ export function ProfileCard({
   bio,
   pagesRead = 0,
   booksRead = 0,
+  isOwner = false,
 }: ProfileCardProps) {
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
   return (
     <Card
       className={clsx(
@@ -44,35 +51,49 @@ export function ProfileCard({
     >
       <CardHeader
         className={clsx(
-          "flex items-center gap-6 p-6",
+          "flex justify-between items-end p-6",
           "bg-gray-500 text-white"
         )}
       >
-        {image && (
-          <div
-            className={clsx(
-              "w-24 h-24 shrink-0 overflow-hidden rounded-md",
-              "border-4 border-blue-500 shadow-lg"
-            )}
-          >
-            <Image
-              src={image}
-              alt={`Foto de ${username}`}
-              width={96}
-              height={96}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        )}
+        <div className="flex items-center gap-6">
+          {image && (
+            <div
+              className={clsx(
+                "w-24 h-24 shrink-0 overflow-hidden rounded-md",
+                "border-4 border-blue-500 shadow-lg"
+              )}
+            >
+              <Image
+                src={image}
+                alt={`Foto de ${username}`}
+                width={96}
+                height={96}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
 
-        <div className="flex flex-col justify-center">
-          <CardTitle className="text-xl font-bold flex items-center gap-1">
-            <AtSignIcon size={16} /> {username}
-          </CardTitle>
-          <CardDescription className="text-sm text-white/80">
-            {realname}
-          </CardDescription>
+          <div className="flex flex-col justify-center">
+            <CardTitle className="text-xl font-bold flex items-center gap-1">
+              <AtSignIcon size={16} /> {username}
+            </CardTitle>
+            <CardDescription className="text-sm text-white/80">
+              {realname}
+            </CardDescription>
+          </div>
         </div>
+
+        {isOwner && (
+          <Button
+            className="self-end cursor-pointer"
+            variant="secondary"
+            size="icon"
+            aria-label="Editar perfil"
+            onClick={() => setModalOpen(true)}
+          >
+            <PencilIcon size={16} />
+          </Button>
+        )}
       </CardHeader>
 
       <CardContent
@@ -84,7 +105,6 @@ export function ProfileCard({
       >
         <div className="flex flex-col items-center bg-muted p-2 rounded-sm text-balance">
           <ScrollArea className=" text-wrap">
-
             {bio}
           </ScrollArea>
         </div>
@@ -107,6 +127,16 @@ export function ProfileCard({
           </div>
         </div>
       </CardContent>
+      <ProfileEditModal
+      key={`${username}-${realname}-${bio}`}
+        open={isModalOpen}
+        onOpenChange={setModalOpen}
+        username={username}
+        realname={realname}
+        bio={bio}
+  
+      />
     </Card>
+
   );
 }

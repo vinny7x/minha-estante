@@ -45,7 +45,6 @@ export function ModalBookInfo({
                         </ScrollArea>
                     </>
                 )}
-
             </DialogContent>
         </Dialog>
     );
