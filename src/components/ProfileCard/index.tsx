@@ -128,13 +128,13 @@ export function ProfileCard({
         </div>
       </CardContent>
       <ProfileEditModal
-      key={`${username}-${realname}-${bio}`}
+        key={`${username}-${realname}-${bio}`}
         open={isModalOpen}
         onOpenChange={setModalOpen}
         username={username}
         realname={realname}
         bio={bio}
-  
+
       />
     </Card>
 

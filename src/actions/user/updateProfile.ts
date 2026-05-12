@@ -1,13 +1,15 @@
 'use server';
 
+import { getServerSession } from "next-auth";
+import { updateUserProfile } from "@/lib/db/queries/user/updateUser";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 export async function updateProfile(formData: FormData) {
   try {
     const username = formData.get("username") as string;
     const realname = formData.get("realname") as string;
     const bio = (formData.get("bio") as string) || "";
-console.log(username)
-    // validações básicas
-    // TODO: migrar para validação com zod
+
     if (!username || username.length < 3) {
       return {
         success: false,
@@ -43,10 +45,24 @@ console.log(username)
       };
     }
 
-    // TODO: salvar no banco de dados
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return {
+        success: false,
+        error: "Usuário não autenticado",
+      };
+    }
+    await updateUserProfile(session.user.id, {
+      username,
+      realname,
+      bio,
+    });
 
     return { success: true };
-  } catch {
+  } catch (error) {
+    console.error(error);
+
     return {
       success: false,
       error: "Erro inesperado",

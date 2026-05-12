@@ -7,6 +7,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
+import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { LoaderIcon, SaveIcon } from "lucide-react";
@@ -29,6 +30,7 @@ export function ProfileEditModal({
     bio,
 }: ProfileEditModalProps) {
     const [isPending, startTransition] = useTransition();
+    const router = useRouter();
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-lg">
@@ -48,6 +50,7 @@ export function ProfileEditModal({
                             if (res?.success) {
                                 toast.success("Perfil atualizado!");
                                 onOpenChange(false);
+                                router.refresh();
                             } else {
                                 toast.error(res?.error);
                             }

@@ -5,8 +5,6 @@ import { useState } from "react";
 import { ModalBookInfo } from "../ModalBookInfo";
 import { StatusBadge } from "../StatusBadge";
 
-
-
 type BookCardProps = {
     coverUrl: string | null;
     title: string;
