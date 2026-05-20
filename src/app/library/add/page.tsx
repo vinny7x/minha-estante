@@ -31,6 +31,7 @@ type Book = {
 };
 
 export default function AddPage() {
+  const [noResult, setNoResult] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Book[]>([]);
 
@@ -53,11 +54,14 @@ export default function AddPage() {
         `/api/books/search?q=${encodeURIComponent(query)}`
       );
 
-      if (!res.ok) return;
-
       const data: Book[] = await res.json();
-      setResults(data);
-
+      if (!data.length) {
+        setNoResult(true);
+        setQuery('');
+      } else {
+        setNoResult(false);
+        setResults(data);
+      }
     });
   }
 
@@ -137,7 +141,7 @@ export default function AddPage() {
       </div>
 
       {/* Resultados */}
-      {results.length === 0 && (
+      {noResult && (
         <p>Nenhum livro correspondente com a busca.</p>
       )}
 
