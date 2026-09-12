@@ -1,23 +1,8 @@
-//import { getServerSession } from "next-auth";
-//import { NextResponse } from "next/server";
-//import { authOptions } from "../../auth/[...nextauth]/route";
-
 import { searchGoogleBooks } from "@/lib/services/google-book";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const q = searchParams.get("q");
-    // TODO: descomentar bloco abaixo para proteger a rota
-    /**
-         const session = await getServerSession(authOptions);
-    
-        if (!session) {
-            return NextResponse.json(
-                { error: "Não autenticado" },
-                { status: 401 }
-            );
-        }
-     */
     if (!q) {
         return Response.json([]);
     }

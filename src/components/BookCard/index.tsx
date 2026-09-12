@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, type KeyboardEvent } from "react";
+import { StarIcon } from "lucide-react";
 import { Card } from "../ui/card";
-import { useState } from "react";
 import { ModalBookInfo } from "../ModalBookInfo";
 import { StatusBadge } from "../StatusBadge";
 
@@ -23,12 +24,26 @@ export function BookCard({
     review
 }: BookCardProps) {
 
-    const [isModalOpen, setOpenModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            setIsModalOpen(true);
+        }
+    };
 
     return (
         <>
             <Card
-                onClick={() => setOpenModal(true)}
+                onClick={openModal}
+                onKeyDown={handleKeyDown}
+                role="button"
+                tabIndex={0}
+                aria-haspopup="dialog"
+                aria-label={`Abrir detalhes de ${title}`}
                 className="group cursor-pointer overflow-hidden transition hover:shadow-lg pt-0 bg-muted basis-40 sm:basis-48 md:basis-56"
             >
                 <div className="aspect-2/3 w-full overflow-hidden bg-muted">
@@ -37,6 +52,10 @@ export function BookCard({
                         <img
                             src={coverUrl}
                             alt={`Capa do livro ${title}`}
+                            loading="lazy"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            sizes="(min-width: 768px) 224px, (min-width: 640px) 192px, 160px"
                             className="h-full w-full object-cover transition group-hover:scale-105"
                         />
                     ) : (
@@ -56,14 +75,26 @@ export function BookCard({
                             {authors}
                         </p>
                     )}
+                    <div className="flex items-center justify-between mt-2">
+                        <StatusBadge status={status} />
+                        {rating && (
+                            <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <StarIcon
+                                    size={12}
+                                    className="fill-amber-400 text-amber-400"
+                                    aria-hidden="true"
+                                />
+                                {rating}
+                            </p>
+                        )}
+                    </div>
 
-                    <StatusBadge status={status} />
                 </div>
             </Card>
 
             <ModalBookInfo
                 open={isModalOpen}
-                onOpenChange={setOpenModal}
+                onOpenChange={setIsModalOpen}
                 title={title}
                 rating={rating}
                 review={review}
