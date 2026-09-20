@@ -59,6 +59,7 @@ export default async function LibraryPage() {
         {userBooks.map((book) => (
           <BookCard
             key={book.bookId}
+            bookId={book.bookId}
             authors={book.authors}
             coverUrl={book.coverUrl}
             title={book.title}

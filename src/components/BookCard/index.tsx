@@ -7,6 +7,7 @@ import { ModalBookInfo } from "../ModalBookInfo";
 import { StatusBadge } from "../StatusBadge";
 
 type BookCardProps = {
+    bookId: string;
     coverUrl: string | null;
     title: string;
     authors: string | null;
@@ -16,6 +17,7 @@ type BookCardProps = {
 };
 
 export function BookCard({
+    bookId,
     authors,
     coverUrl,
     title,
@@ -95,6 +97,7 @@ export function BookCard({
             <ModalBookInfo
                 open={isModalOpen}
                 onOpenChange={setIsModalOpen}
+                bookId={bookId}
                 title={title}
                 rating={rating}
                 review={review}
