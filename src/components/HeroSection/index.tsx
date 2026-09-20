@@ -24,7 +24,7 @@ export function HeroSection() {
 
                 <h1 className="text-5xl font-bold md:text-7xl">
                     Minha{" "}
-                    <span className="bg-gradient-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                    <span className="bg-linear-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent">
                         Estante
                     </span>
                 </h1>
