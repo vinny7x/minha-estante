@@ -5,8 +5,10 @@ import { db } from "@/db/db";
 import { userBooks } from "@/db/schema";
 import { createNewBook } from "@/lib/db/queries/books/createNewBook";
 import { getBookById } from "@/lib/db/queries/books/getBookById";
+import { getUserById } from "@/lib/db/queries/user/getUserById";
 import { eq, and } from "drizzle-orm";
 import { getServerSession } from "next-auth";
+import { revalidateTag } from "next/cache";
 
 type SaveUserBookInput = {
   googleId: string;
@@ -65,6 +67,11 @@ export async function saveUserBook(data: SaveUserBookInput) {
     rating: data.rating.toString(),
     review: data.review,
   });
+
+  const user = await getUserById(session.user.id);
+  if (user?.username) {
+    revalidateTag(`user-info:${user.username}`, "default");
+  }
 
   return { success: true };
 }

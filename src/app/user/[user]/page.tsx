@@ -1,49 +1,44 @@
-import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { BookCard } from "@/components/BookCard";
 import { Container } from "@/components/Container";
 import { ProfileCard } from "@/components/ProfileCard";
-import { getUserBooks } from "@/lib/db/queries/user/getUserBooks";
-import { getUserByUsername } from "@/lib/db/queries/user/getUserByUsername";
 import { LibraryBigIcon } from "lucide-react";
+import { getCachedUserInfo } from "@/lib/cache/userInfoCache";
 
+export const revalidate = 60;
 export default async function UserPage({
     params,
 }: {
-    params: Promise<{ user: string }>;
+    params: Promise<{ user: string; }>;
 }) {
     const { user: username } = await params;
 
-    const session = await getServerSession(authOptions);
-    const user = await getUserByUsername(decodeURIComponent(username));
+    const user = await getCachedUserInfo(decodeURIComponent(username));
 
     if (!user) notFound();
 
-    const userBooks = await getUserBooks(user.id);
-    const isOwner = session?.user?.id === user.id;
+    const userBooks = user.userBooks;
 
     return (
         <Container>
             <div className="flex">
                 <ProfileCard
-                    image={user.image ?? ''}
-                    username={user.username ?? ''}
-                    bio={user.bio ?? ''}
-                    realname={user.realname ?? ''}
+                    image={user.user.image ?? ''}
+                    username={user.user.username ?? ''}
+                    bio={user.user.bio ?? ''}
+                    realname={user.user.realname ?? ''}
                     booksRead={
                         userBooks.filter((book) => book.status === 'read').length
                     }
                     pagesRead={userBooks
                         .filter((book) => book.status === 'read')
                         .reduce((t, b) => Number(t) + Number(b.pages), 0)}
-                    isOwner={isOwner}
                 />
             </div>
 
             <span className="flex items-center justify-center m-6 gap-2 flex-col md:flex-row">
                 <h1 className="text-2xl font-bold text-center">
-                    Estante de {user.username}
+                    Estante de {user.user.username}
                 </h1>
             </span>
 
