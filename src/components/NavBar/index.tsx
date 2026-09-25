@@ -10,8 +10,9 @@ export function NavBar() {
         "flex gap-6",
         "px-4 py-2 mt-4",
         'rounded-md',
-        "bg-black/30",
-        "border border-white/10",
+        "bg-background/60",
+        "backdrop-blur-md",
+        "border border-border",
       )}
     >
       <NavItem href="#home">Início</NavItem>
@@ -31,8 +32,8 @@ function NavItem({
 }) {
   const isInternal = href.startsWith('/');
   const classes = clsx(
-    "text-sm text-white/70",
-    "hover:text-white",
+    "text-sm text-muted-foreground",
+    "hover:text-foreground",
     "transition-all duration-200",
     "hover:scale-105"
   );

@@ -7,18 +7,18 @@ export function HeroSection() {
     return (
         <section
             id="home"
-            className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-zinc-950 px-6 text-center text-white"
+            className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center text-foreground"
         >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.18),transparent_60%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.15),transparent_60%)]" />
             <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-sky-500/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
 
             <div className="relative z-10 flex max-w-3xl flex-col items-center gap-6">
                 <Badge
                     variant="secondary"
-                    className="border-white/10 bg-white/10 text-white"
+                    className="border-border bg-secondary text-secondary-foreground"
                 >
-                    <Sparkles className="text-amber-300" />
+                    <Sparkles className="text-amber-400" />
                     Sua biblioteca digital
                 </Badge>
 
@@ -29,7 +29,7 @@ export function HeroSection() {
                     </span>
                 </h1>
 
-                <p className="max-w-xl text-lg text-white/70">
+                <p className="max-w-xl text-lg text-muted-foreground">
                     Organize seus livros, acompanhe leituras e construa sua
                     biblioteca digital de forma simples e elegante.
                 </p>
@@ -44,7 +44,7 @@ export function HeroSection() {
                     <Button
                         asChild
                         variant="outline"
-                        className="border-white/20 bg-transparent text-white hover:bg-white/10"
+                        className="border-border text-foreground hover:bg-accent"
                     >
                         <a href="#features">Conhecer funcionalidades</a>
                     </Button>
@@ -54,7 +54,7 @@ export function HeroSection() {
             <a
                 href="#features"
                 aria-label="Rolar para as funcionalidades"
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 transition-colors hover:text-white"
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground transition-colors hover:text-foreground"
             >
                 <ChevronDown className="size-6 animate-bounce" />
             </a>
