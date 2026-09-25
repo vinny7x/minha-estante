@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
-import { AtSignIcon, PencilIcon } from "lucide-react";
+import { AtSignIcon, ExternalLinkIcon, PencilIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { ProfileEditModal } from "../ProfileEditModal";
+import Link from "next/link";
 
 type ProfileCardProps = {
   image?: string;
@@ -24,12 +25,14 @@ type ProfileCardProps = {
   pagesRead?: number;
   booksRead?: number;
   isOwner?: boolean;
+  publicProfileLink?: string;
 };
 export function ProfileCard({
   image,
   username,
   realname,
   bio,
+  publicProfileLink,
   pagesRead = 0,
   booksRead = 0,
   isOwner = false,
@@ -74,8 +77,18 @@ export function ProfileCard({
           )}
 
           <div className="flex flex-col justify-center">
-            <CardTitle className="text-xl font-bold flex items-center gap-1">
+            <CardTitle className="text-xl font-bold flex items-center gap-1 ">
               <AtSignIcon size={16} /> {username}
+              {publicProfileLink && (
+                <Link
+                  href={publicProfileLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-2 text-sm text-white/80 hover:text-white transition-colors"
+                >
+                  <ExternalLinkIcon size={16} />
+                </Link>
+              )}
             </CardTitle>
             <CardDescription className="text-sm text-white/80">
               {realname}

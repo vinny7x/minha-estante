@@ -36,7 +36,7 @@ export default async function LibraryPage() {
       </nav>
       <div className="flex">
         <ProfileCard
-          image={session.user.image ?? ''}
+          image={user.image ?? ''}
           username={user.username ?? ''}
           bio={user.bio ?? ''}
           realname={user.realname ?? ''}
@@ -44,6 +44,7 @@ export default async function LibraryPage() {
           pagesRead={userBooks
             .reduce((t, b) => Number(t) + Number(b.pages), 0)}
           isOwner
+          publicProfileLink={`/user/${user.username}`}
         />
       </div>
       <span className="flex items-center justify-center m-6 gap-2 flex-col md:flex-row">
