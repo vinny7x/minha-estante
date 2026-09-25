@@ -13,7 +13,7 @@ export function HeroSection() {
             <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-sky-500/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
 
-            <div className="relative z-10 flex max-w-3xl flex-col items-center gap-6">
+            <div className="relative flex max-w-3xl flex-col items-center gap-6">
                 <Badge
                     variant="secondary"
                     className="border-border bg-secondary text-secondary-foreground"

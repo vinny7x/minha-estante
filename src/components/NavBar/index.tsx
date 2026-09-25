@@ -13,6 +13,7 @@ export function NavBar() {
         "bg-background/60",
         "backdrop-blur-md",
         "border border-border",
+        "z-10"
       )}
     >
       <NavItem href="#home">Início</NavItem>
