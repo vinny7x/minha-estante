@@ -9,6 +9,7 @@ import { LibraryBigIcon, LogOutIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BookCard } from "@/components/BookCard";
+import { ThemeToggleButton } from "@/components/ThemeToogleButton";
 
 export default async function LibraryPage() {
   const session = await getServerSession(authOptions);
@@ -24,14 +25,15 @@ export default async function LibraryPage() {
 
   return (
     <Container>
-      <div className="flex justify-end">
+      <nav className="flex justify-end">
         <Button asChild className="m-2 flex gap-2 cursor-pointer">
           <Link href="/logout" className="flex items-center gap-2">
             <LogOutIcon size={16} />
             Sair
           </Link>
         </Button>
-      </div>
+          <ThemeToggleButton />
+      </nav>
       <div className="flex">
         <ProfileCard
           image={session.user.image ?? ''}

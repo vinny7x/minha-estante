@@ -1,11 +1,12 @@
 import clsx from "clsx";
 import Link from "next/link";
+import { ThemeToggleButton } from "../ThemeToogleButton";
 
 export function NavBar() {
   return (
     <nav
       className={clsx(
-        "fixed left-1/2 -translate-x-1/2 z-10",
+        "fixed left-1/2 -translate-x-1/2 z-10 justify-center items-center",
         "flex gap-6",
         "px-4 py-2 mt-4",
         'rounded-md',
@@ -16,6 +17,7 @@ export function NavBar() {
       <NavItem href="#home">Início</NavItem>
       <NavItem href="#features">Funcionalidades</NavItem>
       <NavItem href="/login">Login</NavItem>
+      <span><ThemeToggleButton /></span>
     </nav>
   );
 }

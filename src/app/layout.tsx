@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ToastContainer } from 'react-toastify';
 
-import './globals.css';
+import "./globals.css";
 import { Providers } from "./provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,11 +27,17 @@ export default function RootLayout({
   return (
     <html lang="pt-br" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+    ${geistSans.variable}
+    ${geistMono.variable}
+    antialiased
+  `}
       >
-        <Providers>
-          {children}
-        </Providers>
+        <ThemeProvider>
+          <Providers>
+            {children}
+          </Providers>
+        </ThemeProvider>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -40,7 +47,7 @@ export default function RootLayout({
           rtl={false}
           pauseOnFocusLoss
           draggable
-          pauseOnHover/>
+          pauseOnHover />
       </body>
     </html>
   );
