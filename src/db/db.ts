@@ -1,30 +1,33 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { books, userBooks, users } from './schema';
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+
+import {
+  books,
+  userBooks,
+  user,
+  session,
+  account,
+  verification,
+} from "./schema";
 
 if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL não definida');
+  throw new Error("DATABASE_URL não definida");
 }
 
-const client = postgres(process.env.DATABASE_URL);
+const client = postgres(process.env.DATABASE_URL, {
+  max: 10,
+  idle_timeout: 20,
+  connect_timeout: 10,
+});
 
 export const db = drizzle(client, {
   schema: {
-    users,
+    user,
+    session,
+    account,
+    verification,
     books,
-    userBooks
+    userBooks,
   },
   logger: false,
-},)
-
-/** 
-async function testConnection() {
-  try {
-    await client`SELECT 1`
-    console.log('🟢 Conectado ao banco com sucesso')
-  } catch (err) {
-    console.error('🔴 Erro ao conectar no banco:', err)
-  }
-}
-
-testConnection()*/
+});

@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1771883837785,
-      "tag": "0000_pink_johnny_storm",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1771969772954,
-      "tag": "0001_yellow_supernaut",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1772157960079,
-      "tag": "0002_nifty_rocket_raccoon",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1772222182637,
-      "tag": "0003_nasty_sleepwalker",
+      "when": 1791347479588,
+      "tag": "0000_amused_meteorite",
       "breakpoints": true
     }
   ]

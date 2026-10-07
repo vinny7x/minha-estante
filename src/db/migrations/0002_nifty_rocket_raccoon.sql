@@ -1,1 +1,0 @@
-ALTER TABLE "books" ADD COLUMN "pub_date" timestamp;
