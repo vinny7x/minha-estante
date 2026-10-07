@@ -1,9 +1,9 @@
 import { db } from "@/db/db";
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getUserById(userId: string ){
-    return db.query.users.findFirst({
-        where: eq(users.id, userId)
+    return db.query.user.findFirst({
+        where: eq(user.id, userId)
     })
 }

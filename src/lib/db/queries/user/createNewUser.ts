@@ -1,14 +1,14 @@
 import { InferInsertModel } from "drizzle-orm";
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { db } from "@/db/db";
 
-type NewUser = InferInsertModel<typeof users>;
+type NewUser = InferInsertModel<typeof user>;
 
 export async function createNewUser(data: NewUser) {
-  const [user] = await db
-    .insert(users)
+  const [NewUser] = await db
+    .insert(user)
     .values(data)
     .returning();
 
-  return user;
+  return NewUser;
 }

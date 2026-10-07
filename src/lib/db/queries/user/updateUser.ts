@@ -1,26 +1,27 @@
 import { eq } from "drizzle-orm";
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { db } from "@/db/db";
 
 type UpdateProfileData = {
   username?: string;
   realname?: string;
-  bio?: string;
+  biography?: string;
 };
 
 export async function updateUserProfile(
   id: string,
   data: UpdateProfileData
 ) {
-  const [user] = await db
-    .update(users)
+  const [updatedUser] = await db
+    .update(user)
     .set({
       username: data.username,
       realname: data.realname,
-      bio: data.bio,
+      biography: data.biography,
+      updatedAt: new Date(),
     })
-    .where(eq(users.id, id))
+    .where(eq(user.id, id))
     .returning();
 
-  return user;
+  return updatedUser;
 }

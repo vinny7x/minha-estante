@@ -1,9 +1,9 @@
 import { db } from "@/db/db";
-import { users } from "@/db/schema";
+import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getUserByUsername(username: string) {
-    return db.query.users.findFirst({
-        where: eq(users.username, username),
+    return db.query.user.findFirst({
+        where: eq(user.username, username),
     });
-}
+}// Better Auth usa text/cuid ou uuid - configurar
