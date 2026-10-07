@@ -25,7 +25,7 @@ export default async function UserPage({
                 <ProfileCard
                     image={user.user.image ?? ''}
                     username={user.user.username ?? ''}
-                    bio={user.user.bio ?? ''}
+                    bio={user.user.biography ?? ''}
                     realname={user.user.realname ?? ''}
                     booksRead={
                         userBooks.filter((book) => book.status === 'read').length

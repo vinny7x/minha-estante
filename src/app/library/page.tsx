@@ -1,5 +1,5 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
 import { ProfileCard } from "@/components/ProfileCard";
 import { redirect } from "next/navigation";
 import { Container } from "@/components/Container";
@@ -12,7 +12,7 @@ import { BookCard } from "@/components/BookCard";
 import { ThemeToggleButton } from "@/components/ThemeToogleButton";
 
 export default async function LibraryPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session) redirect("/login");
 
   const user = await getUserById(session.user.id);
@@ -21,8 +21,6 @@ export default async function LibraryPage() {
     redirect("/login");
 
   };
-
-
   return (
     <Container>
       <nav className="flex justify-end">
@@ -32,13 +30,13 @@ export default async function LibraryPage() {
             Sair
           </Link>
         </Button>
-          <ThemeToggleButton />
+        <ThemeToggleButton />
       </nav>
       <div className="flex">
         <ProfileCard
           image={user.image ?? ''}
           username={user.username ?? ''}
-          bio={user.bio ?? ''}
+          bio={user.biography ?? ''}
           realname={user.realname ?? ''}
           booksRead={userBooks.filter((book) => book.status === 'read').length}
           pagesRead={userBooks
