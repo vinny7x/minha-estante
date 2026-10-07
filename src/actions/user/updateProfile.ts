@@ -1,8 +1,8 @@
 'use server';
 
-import { getServerSession } from "next-auth";
 import { updateUserProfile } from "@/lib/db/queries/user/updateUser";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
 
 export async function updateProfile(formData: FormData) {
   try {
@@ -45,7 +45,7 @@ export async function updateProfile(formData: FormData) {
       };
     }
 
-    const session = await getServerSession(authOptions);
+    const session = await auth.api.getSession({ headers: await headers() });
 
     if (!session?.user?.id) {
       return {
@@ -56,7 +56,7 @@ export async function updateProfile(formData: FormData) {
     await updateUserProfile(session.user.id, {
       username,
       realname,
-      bio,
+      biography: bio,
     });
 
     return { success: true };

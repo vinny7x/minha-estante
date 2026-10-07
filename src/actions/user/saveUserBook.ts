@@ -1,13 +1,12 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { db } from "@/db/db";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";import { db } from "@/db/db";
 import { userBooks } from "@/db/schema";
 import { createNewBook } from "@/lib/db/queries/books/createNewBook";
 import { getBookById } from "@/lib/db/queries/books/getBookById";
 import { getUserById } from "@/lib/db/queries/user/getUserById";
 import { eq, and } from "drizzle-orm";
-import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
 
 type SaveUserBookInput = {
@@ -23,7 +22,7 @@ type SaveUserBookInput = {
 };
 
 export async function saveUserBook(data: SaveUserBookInput) {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session) throw new Error('usuário nao autenticado');
 
   const existingBook = await getBookById(data.googleId);

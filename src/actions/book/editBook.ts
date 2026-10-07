@@ -1,10 +1,10 @@
 'use server';
 
-import { getServerSession } from "next-auth";
 import { and, eq } from "drizzle-orm";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/db/db";
 import { userBooks } from "@/db/schema";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
 
 type EditBookInput = {
   bookId: string;
@@ -14,7 +14,7 @@ type EditBookInput = {
 };
 
 export async function editBook(data: EditBookInput) {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
     throw new Error("usuário não autenticado");
   }

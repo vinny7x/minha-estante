@@ -1,17 +1,17 @@
 'use server';
 
-import { getServerSession } from "next-auth";
 import { and, eq } from "drizzle-orm";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { db } from "@/db/db";
 import { userBooks } from "@/db/schema";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
 
 type DeleteBookInput = {
   bookId: string;
 };
 
 export async function deleteBook(data: DeleteBookInput) {
-  const session = await getServerSession(authOptions);
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session) {
     throw new Error("usuário não autenticado");
   }
