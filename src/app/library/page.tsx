@@ -5,11 +5,10 @@ import { redirect } from "next/navigation";
 import { Container } from "@/components/Container";
 import { getUserById } from "@/lib/db/queries/user/getUserById";
 import { getUserBooks } from "@/lib/db/queries/user/getUserBooks";
-import { LibraryBigIcon, LogOutIcon, PlusCircleIcon } from "lucide-react";
+import { LibraryBigIcon, PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BookCard } from "@/components/BookCard";
-import { ThemeToggleButton } from "@/components/ThemeToogleButton";
 
 export default async function LibraryPage() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -22,16 +21,7 @@ export default async function LibraryPage() {
 
   };
   return (
-    <Container>
-      <nav className="flex justify-end">
-        <Button asChild className="m-2 flex gap-2 cursor-pointer">
-          <Link href="/logout" className="flex items-center gap-2">
-            <LogOutIcon size={16} />
-            Sair
-          </Link>
-        </Button>
-        <ThemeToggleButton />
-      </nav>
+    <Container className="pt-4">
       <div className="flex">
         <ProfileCard
           image={user.image ?? ''}
@@ -65,12 +55,12 @@ export default async function LibraryPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <h2 className="text-2xl font-bold">
-                Sua estante está{" "}
-                <span className="bg-linear-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent">
-                  vazia
-                </span>
-              </h2>
+                <h2 className="text-2xl font-bold">
+                  Sua estante está{" "}
+                  <span className="text-primary">
+                    vazia
+                  </span>
+                </h2>
               <p className="text-muted-foreground">
                 Adicione seus livros favoritos para acompanhar seu progresso de leitura e manter suas resenhas em um só lugar.
               </p>

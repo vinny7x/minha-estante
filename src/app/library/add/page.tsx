@@ -162,7 +162,7 @@ export default function AddPage() {
                   />
                 )}
 
-                <div>
+                <div className="pt-4">
                   <p className="font-semibold">{book.title}</p>
                   <p className="text-sm text-muted-foreground">
                     {book.authors}
