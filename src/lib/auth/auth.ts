@@ -4,6 +4,7 @@ import { db } from "@/db/db";
 import * as schema from "@/db/schema";
 import { generateUsername } from "@/lib/utils/generateUsername";
 import { eq } from "drizzle-orm";
+import { lastLoginMethod } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -17,6 +18,8 @@ export const auth = betterAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     },
   },
+
+  plugins: [lastLoginMethod()],
 
   user: {
     additionalFields: {
