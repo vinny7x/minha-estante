@@ -53,7 +53,7 @@ export default async function UserPage({
                         <div className="space-y-2">
                             <h2 className="text-2xl font-bold">
                                 Estante{" "}
-                                <span className="bg-linear-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                                <span className="text-primary">
                                     vazia
                                 </span>
                             </h2>
