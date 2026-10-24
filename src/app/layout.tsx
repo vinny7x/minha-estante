@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { ToastContainer } from 'react-toastify';
 
 import "./globals.css";
 import { Providers } from "./provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { NavBar } from "@/components/NavBar";
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,18 +28,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
-    <html lang="pt-br" className="scroll-smooth">
-      <body
-        className={`
-    ${geistSans.variable}
-    ${geistMono.variable}
-    antialiased
-  `}
-      >
+    <html lang="pt-br" className={`scroll-smooth ${inter.variable} ${fraunces.variable}`} suppressHydrationWarning>
+      <body className="antialiased font-sans">
         <ThemeProvider>
           <Providers>
-            {children}
+            <NavBar />
+            <main>
+              {children}
+            </main>
           </Providers>
         </ThemeProvider>
         <ToastContainer

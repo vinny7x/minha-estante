@@ -1,6 +1,5 @@
-import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
@@ -9,22 +8,15 @@ export function HeroSection() {
             id="home"
             className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center text-foreground"
         >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.15),transparent_60%)]" />
-            <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-sky-500/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.12),transparent_60%)]" />
+            <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
             <div className="relative flex max-w-3xl flex-col items-center gap-6">
-                <Badge
-                    variant="secondary"
-                    className="border-border bg-secondary text-secondary-foreground"
-                >
-                    <Sparkles className="text-amber-400" />
-                    Sua biblioteca digital
-                </Badge>
 
                 <h1 className="text-5xl font-bold md:text-7xl">
                     Minha{" "}
-                    <span className="bg-linear-to-r from-indigo-400 to-sky-400 bg-clip-text text-transparent">
+                    <span className="text-primary">
                         Estante
                     </span>
                 </h1>

@@ -2,15 +2,8 @@
 
 import Image from "next/image";
 import clsx from "clsx";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "../ui/separator";
-import { ScrollArea } from "../ui/scroll-area";
 import { AtSignIcon, ExternalLinkIcon, PencilIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -27,6 +20,7 @@ type ProfileCardProps = {
   isOwner?: boolean;
   publicProfileLink?: string;
 };
+
 export function ProfileCard({
   image,
   username,
@@ -37,7 +31,6 @@ export function ProfileCard({
   booksRead = 0,
   isOwner = false,
 }: ProfileCardProps) {
-
   const [isModalOpen, setModalOpen] = useState(false);
 
   return (
@@ -45,98 +38,87 @@ export function ProfileCard({
       className={clsx(
         "mt-4",
         "mx-auto",
-        "max-w-2xl",
+        "w-full",
+        "max-w-3xl",
         "overflow-hidden",
         "rounded-2xl",
-        "shadow-md",
+        "border-border/60",
+        "shadow-sm",
         "p-0"
       )}
     >
-      <CardHeader
-        className={clsx(
-          "flex justify-between items-end p-6",
-          "bg-gray-500 text-white"
-        )}
-      >
-        <div className="flex items-center gap-6">
-          {image && (
-            <div
-              className={clsx(
-                "w-24 h-24 shrink-0 overflow-hidden rounded-md",
-                "border-4 border-blue-500 shadow-lg"
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/40 sm:h-20 sm:w-20">
+              {image ? (
+                <Image
+                  src={image}
+                  alt={`Foto de ${username}`}
+                  width={80}
+                  height={80}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-muted text-sm font-semibold text-muted-foreground">
+                  {username.slice(0, 2).toUpperCase()}
+                </div>
               )}
-            >
-              <Image
-                src={image}
-                alt={`Foto de ${username}`}
-                width={96}
-                height={96}
-                className="h-full w-full object-cover"
-              />
             </div>
-          )}
-
-          <div className="flex flex-col justify-center">
-            <CardTitle className="text-xl font-bold flex items-center gap-1 ">
-              <AtSignIcon size={16} /> {username}
-              {publicProfileLink && (
-                <Link
-                  href={publicProfileLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-2 text-sm text-white/80 hover:text-white transition-colors"
-                >
-                  <ExternalLinkIcon size={16} />
-                </Link>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold sm:text-xl">{realname || username}</h2>
+                {publicProfileLink && (
+                  <Link
+                    href={publicProfileLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                    aria-label="Ver perfil público"
+                  >
+                    <ExternalLinkIcon size={16} />
+                  </Link>
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <AtSignIcon size={14} />
+                <span>{username}</span>
+              </div>
+              {bio && (
+                <p className="mt-1 max-w-xl text-sm text-muted-foreground line-clamp-2">
+                  {bio}
+                </p>
               )}
-            </CardTitle>
-            <CardDescription className="text-sm text-white/80">
-              {realname}
-            </CardDescription>
-          </div>
-        </div>
-
-        {isOwner && (
-          <Button
-            className="self-end cursor-pointer"
-            variant="secondary"
-            size="icon"
-            aria-label="Editar perfil"
-            onClick={() => setModalOpen(true)}
-          >
-            <PencilIcon size={16} />
-          </Button>
-        )}
-      </CardHeader>
-
-      <CardContent
-        className={clsx(
-          "flex items-center justify-around gap-6",
-          "px-6 py-4 text-center",
-          "flex-col sm:flex-row"
-        )}
-      >
-        <div className="flex flex-col items-center bg-muted p-2 rounded-sm text-balance">
-          <ScrollArea className=" text-wrap">
-            {bio}
-          </ScrollArea>
-        </div>
-
-        <Separator className="sm:hidden" />
-
-        <div className="flex gap-6">
-          <div className="flex flex-col items-center">
-            <span className="text-lg font-bold">{pagesRead.toLocaleString()}</span>
-            <span className="text-xs text-muted-foreground">
-              Páginas lidas
-            </span>
+            </div>
           </div>
 
-          <div className="flex flex-col items-center">
-            <span className="text-lg font-bold">{booksRead.toLocaleString()}</span>
-            <span className="text-xs text-muted-foreground">
-              Livros lidos
-            </span>
+          <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-end">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-center">
+                <span className="text-base font-semibold sm:text-lg">
+                  {booksRead.toLocaleString()}
+                </span>
+                <span className="text-xs text-muted-foreground">Livros lidos</span>
+              </div>
+              <Separator orientation="vertical" className="h-8" />
+              <div className="flex flex-col items-center">
+                <span className="text-base font-semibold sm:text-lg">
+                  {pagesRead.toLocaleString()}
+                </span>
+                <span className="text-xs text-muted-foreground">Páginas lidas</span>
+              </div>
+            </div>
+            {isOwner && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => setModalOpen(true)}
+              >
+                <PencilIcon size={14} />
+                Editar perfil
+              </Button>
+            )}
           </div>
         </div>
       </CardContent>
@@ -147,9 +129,7 @@ export function ProfileCard({
         username={username}
         realname={realname}
         bio={bio}
-
       />
     </Card>
-
   );
 }

@@ -58,7 +58,7 @@ export function ProfileEditModal({
                     }}
                     className="flex flex-col gap-4 mt-2"
                 >
-                    <label className="text-gray-500 text-sm" htmlFor="username">
+                    <label className="text-muted-foreground text-sm" htmlFor="username">
                         Nome de usuário:
                     </label>
 
@@ -69,7 +69,7 @@ export function ProfileEditModal({
                         placeholder="Username"
                     />
 
-                    <label className="text-gray-500 text-sm" htmlFor="realname">
+                    <label className="text-muted-foreground text-sm" htmlFor="realname">
                         Seu nome real:
                     </label>
 
@@ -80,7 +80,7 @@ export function ProfileEditModal({
                         placeholder="Nome real"
                     />
 
-                    <label className="text-gray-500 text-sm" htmlFor="bio">
+                    <label className="text-muted-foreground text-sm" htmlFor="bio">
                         Sua biografia:
                     </label>
 
